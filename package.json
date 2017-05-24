@@ -1,0 +1,18 @@
+{
+  "name": "karma-html",
+  "version": "0.1.0",
+  "description": "Load html files and test the DOM in the browser",
+  "main": "index.js",
+  "keywords": [
+    "html",
+    "dom",
+    "karma",
+    "jasmine",
+    "test"
+  ],
+  "author": "Pawel Rafalko <dev.rafalko@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "glob": "^7.1.2"
+  }
+}
