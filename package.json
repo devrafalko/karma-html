@@ -1,6 +1,6 @@
 {
   "name": "karma-html",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Load html files and test the DOM in the browser",
   "main": "index.js",
   "keywords": [
@@ -12,7 +12,18 @@
   ],
   "author": "Pawel Rafalko <dev.rafalko@gmail.com>",
   "license": "MIT",
-  "devDependencies": {
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
     "glob": "^7.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devrafalko/karma-html.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devrafalko/karma-html/issues"
+  },
+  "homepage": "https://github.com/devrafalko/karma-html#readme"
 }
