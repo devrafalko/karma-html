@@ -46,15 +46,17 @@ var loadHTML = function(files,client,basePath){
 		'Two of the client.karmaHTML.source items\' tag properties are doubled, while each of them should be unique.',
 		'The client.karmaHTML.source src paths should indicate unique html files, rather than use wildcards.'
 	];
-
+    
 	for(var i=0;i<conditions.length;i++){
 		if(pushError(conditions[i],errorMsg[i])) return;
 	}
 	
+    for(var i=0;i<s.length;i++){
+      files.unshift(htmlPattern(path.join(basePath,s[i].src)));
+    }
+    
 	files.unshift(jsPattern(path.join(__dirname, '/lib/appender.js')));
 	files.unshift(cssPattern(path.join(__dirname, '/lib/styles.css')));
-	var s = __dirname.split(path.sep);
-	c.cssSrc = path.win32.join('base',s[s.length-2],s[s.length-1],'/lib/styles.css');
 };
 
 function pushError(condition,message){
@@ -84,7 +86,7 @@ function hasDoubles(a){
 	return false;
 }
 
-loadHTML.$inject = ['config.files','config.client','config.basePath','config'];
+loadHTML.$inject = ['config.files','config.client','config.basePath'];
 
 module.exports = {
   'reporter:karmaHTML': ['factory',loadHTML]

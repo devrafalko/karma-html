@@ -82,14 +82,30 @@ All config properties *(excluding `client.karmaHTML.source`)* are optional. For 
 **Default:** If the `source` property is of the **incorrect** syntax or does not indicate any *(or existing)* `.html` file, the suitable hint errors will occure with the clear explanation what to fix. The `karma` will run **without** `karma-html` module if the `client.karmaHTML.source` property is incorrect anyway.  
 **Description:** Indicates the `.html` file(s) that should be loaded into the **iframes**. The array should include object-type items with `src` property, that indicates the `.html` file path and the `tag` property, that can further be used in the unit tests to get the control of the particular `.html` file. The **tag names** should respect JavaScript identifiers constructing rules: `[A-Za-z0-9_$], began with letter, _ or $`
 
+> You do not have to load `.html` files in the **karma** `config file` `files` array, if you've already loaded them in the `client.karmaHTML.source` array.  
+> Remember, to load all resources files of you `.html` files in the **karma** `config file` `files` array.
+
 ###### Syntax example
 ```javascript
-client.karmaHTML: {
-  source: [
-    {src:'./public/index.html', tag:'index'},
-    {src:'./public/template.html', tag:'tmpl'}
-  ]
-}
+module.exports = function(config) {
+  config.set({
+    files: [
+      //no need to load your index.html and template.html here
+      //all resources of your .html files should be loaded here
+	  {pattern: './public/*.js', watched:true, served:true, included:true},
+	  {pattern: './public/*.png', watched:false, served:true, included:false},
+	  {pattern: './public/fonts/*', watched:false, served:true, included:false}
+    ],
+    client: {
+      karmaHTML:{
+        source: [
+          {src:'./public/index.html', tag:'index'},
+          {src:'./public/template.html', tag:'tmpl'}
+        ]
+      }
+    }
+  });
+};  
 ```
 
 ### **client.karmaHTML.`auto`**
