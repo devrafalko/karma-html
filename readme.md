@@ -4,6 +4,8 @@ Use `karma-html` to test your `html` files in the browser with `karma`
 * `karma-html` allows you to open, refresh, close and set the dimensions of the **iframes** through your test suits whenever you want.
 * `karma-html` gives you the access to the `Document` object of each loaded `.html` file through your test suits. Testing `.html` files via its `Document` objects seems much more genuine and reliable than when HTML content is appended into the `div` containers.
 
+> See also `jasmine-dom-custom-matchers` [*\[npm\]*](https://www.npmjs.com/package/jasmine-dom-custom-matchers) [*\[git\]*](https://github.com/devrafalko/jasmine-dom-custom-matchers) *(the set of custom matchers to test html **DOM**)*
+
 #### The list of contents:
 1. [Description](#description)
 2. [Q&A](#qa)

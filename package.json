@@ -1,6 +1,6 @@
 {
   "name": "karma-html",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Load html files and test the DOM in the browser",
   "main": "index.js",
   "keywords": [
