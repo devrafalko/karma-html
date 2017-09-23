@@ -4,18 +4,20 @@ Use `karma-html` to test your `html` files in the browser with `karma`
 * `karma-html` allows you to open, refresh, close and set the dimensions of the **iframes** through your test suits whenever you want.
 * `karma-html` gives you the access to the `Document` object of each loaded `.html` file through your test suits. Testing `.html` files via its `Document` objects seems much more genuine and reliable than when HTML content is appended into the `div` containers.
 
-> See also `jasmine-dom-custom-matchers` [*\[npm\]*](https://www.npmjs.com/package/jasmine-dom-custom-matchers) [*\[git\]*](https://github.com/devrafalko/jasmine-dom-custom-matchers) *(the set of custom matchers to test html **DOM**)*
+> See also `karma-jasmine-dom` [*\[npm\]*](https://www.npmjs.com/package/karma-jasmine-dom) *(Set of 19 jasmine custom matchers configured for karma to test html DOM)*
+
+> **Got confused?** See the step-by-step [example below](#step-by-step-configuration) to get acquainted with what the `karma-html` can be used for.
 
 #### The list of contents:
 1. [Description](#description)
 2. [Q&A](#qa)
 3. [Config](#config)
-    * [source](#clientkarmahtmlsource)
-    * [auto](#clientkarmahtmlauto)
-    * [timeout](#clientkarmahtmltimeout)
-    * [abort](#clientkarmahtmlabort)
-    * [width](#clientkarmahtmlwidth)
-    * [height](#clientkarmahtmlheight)
+    * [source](#clientkarmahtml-source)
+    * [auto](#clientkarmahtml-auto)
+    * [timeout](#clientkarmahtml-timeout)
+    * [abort](#clientkarmahtml-abort)
+    * [width](#clientkarmahtml-width)
+    * [height](#clientkarmahtml-height)
 4. [karmaHTML and Tag objects](#karmahtml-and-tag-objects)
 5. [iframe Document Object access](#iframe-document-object-access)
 6. [Methods](#methods)
@@ -44,17 +46,18 @@ Use `karma-html` to test your `html` files in the browser with `karma`
         * [onstatechange](#onstatechange-1)
 8. [Common problems](#common-problems)
 9. [Examples](#examples)
+10. [Step-by-step configuration](#step-by-step-configuration)
 
 # Q&A
 
 1. How should I **configure** the **karma** `config file`, to run karmaHTML in my browser? [*\[see below\]*](#config)
-2. How can I indicate `.html` files, that I want to test? [*\[see below\]*](#clientkarmahtmlsource)
-3. How can I **open** my `.html` files in my **karma browser runner**? [*\[see below\]*](#clientkarmahtmlauto)
+2. How can I indicate `.html` files, that I want to test? [*\[see below\]*](#clientkarmahtml-source)
+3. How can I **open** my `.html` files in my **karma browser runner**? [*\[see below\]*](#clientkarmahtml-auto)
 4. How can I get the access to the **Document** Object of each `.html` file loaded in my tests? [*\[see below\]*](#iframe-document-object-access)
 5. Ok, I've already tested my `.html` files, I don't need it anymore, I want to **close** them. [*\[see below\]*](#close)
 6. I've got million `.html` files to test! I'd prefer to **open**, test and **close** each `.html` file **separately**, rather than open them all at once! [*\[see below\]*](#1-test-your-html-files-of-tag-index-and-tmpl-separately)
 7. How do I know, if the `.html` file has been **loaded successfully** and whether it is **ready to be tested**? [*\[see below\]*](#onstatechange)
-8. The `.html` files are loading for ages! Perhaps something's not right... I want to set **timeout**! [*\[see below\]*](#clientkarmahtmlabort)
+8. The `.html` files are loading for ages! Perhaps something's not right... I want to set **timeout**! [*\[see below\]*](#clientkarmahtml-abort)
 9. I want to test the **responsiveness** of the layout. [*\[see below\]*](#width)
 
 # Config
@@ -227,7 +230,7 @@ To get the access to any iframe **Document** object of loaded `.html` file, use 
 * To get the access to the **Document** object of `index.html` file, use `karmaHTML.index.document`
 * To get the access to the **Document** object of `template.html` file, use `karmaHTML.tmpl.document`
 
-> It gives you the access to the **Document** object if its iframe is appended to the DOM. Use the `open()` [method](#open) or [configure](#clientkarmahtmlauto) the **karma** `config file` setting appropriately: `client.karmaHTML.auto:true` [*\[as above\]*]
+> It gives you the access to the **Document** object if its iframe is appended to the DOM. Use the `open()` [method](#open) or [configure](#clientkarmahtml-auto) the **karma** `config file` setting appropriately: `client.karmaHTML.auto:true` [*\[as above\]*]
 
 ### You can get the access via the window Object
 Each iframe **Document** object's reference is added to the **`window`** object as `document_0`, `document_1`, `document_2`, etc. property.
@@ -236,7 +239,7 @@ The `document_X`s are numbered according to the order of `client.karmaHTML.sourc
 * To get the access to the **Document** object of `template.html` file, use `window.document_1` *(or just `document_1`)*
 * etc.
 
-> It gives you the access to the **Document** object if its iframe is appended to the DOM. Use the `open()` [method](#open) or [configure](#clientkarmahtmlauto) the **karma** `config file` setting appropriately: `client.karmaHTML.auto:true`
+> It gives you the access to the **Document** object if its iframe is appended to the DOM. Use the `open()` [method](#open) or [configure](#clientkarmahtml-auto) the **karma** `config file` setting appropriately: `client.karmaHTML.auto:true`
 
 # Methods
 The methods can be used:
@@ -295,7 +298,7 @@ karmaHTML.tmpl.open({width:null,height:null}); //appends html file of tmpl tag w
 * The value *(eg. `'600px'`)* is appended to the **iframe** elements as the attribute `style="width:600px"`
 * All valid CSS values and units are allowed
 * Incorrect values will be ignored and the `width` will not be changed
-* Use `karmaHTML.width = null` to reset **all iframes** `width` CSS style to its **default values** *(to the value defined in the **karma** `config file` as `client.karmaHTML.width` [\[see above\]](#clientkarmahtmlwidth), or - if not defined - to the module default value `90%`)*
+* Use `karmaHTML.width = null` to reset **all iframes** `width` CSS style to its **default values** *(to the value defined in the **karma** `config file` as `client.karmaHTML.width` [\[see above\]](#clientkarmahtml-width), or - if not defined - to the module default value `90%`)*
 > Also check out `karmaHTML.index.width` [property](#width-1)  
 > Also check out `karmaHTML.open()` [dimensions parameter](#open)
 
@@ -328,12 +331,12 @@ It works accordingly to the `karmaHTML.width` property [\[see above\]](#width).
 **Syntax:** `karmaHTML.config` *(readonly)*  
 **Return value type:** `Object`  
 **Description:** Returns the list of **config** properties specified in the **karma** `config file`. If some of config properties where not specified in the **karma** `config file` it returns the module **default value** instead. It returns:
-* `source` - returns the `client.karmaHTML.source` array [*\[see above\]*](#clientkarmahtmlsource)
-* `auto` - returns the `client.karmaHTML.auto` [*\[see above\]*](#clientkarmahtmlauto) *(if not specified - returns **default** `false`)*
-* `width` - returns the `client.karmaHTML.width` [*\[see above\]*](#clientkarmahtmlwidth) *(if not specified - returns **default** `90%`)*
-* `height` - returns the `client.karmaHTML.height` [*\[see above\]*](#clientkarmahtmlheight) *(if not specified - returns **default** `80vh`)*
-* `abort` - returns the `client.karmaHTML.abort` [*\[see above\]*](#clientkarmahtmlabort) *(if not specified - returns **default** `0`)*
-* `timeout` - returns the `client.karmaHTML.timeout` [*\[see above\]*](#clientkarmahtmltimeout) *(if not specified - returns **default** `0`)*
+* `source` - returns the `client.karmaHTML.source` array [*\[see above\]*](#clientkarmahtml-source)
+* `auto` - returns the `client.karmaHTML.auto` [*\[see above\]*](#clientkarmahtml-auto) *(if not specified - returns **default** `false`)*
+* `width` - returns the `client.karmaHTML.width` [*\[see above\]*](#clientkarmahtml-width) *(if not specified - returns **default** `90%`)*
+* `height` - returns the `client.karmaHTML.height` [*\[see above\]*](#clientkarmahtml-height) *(if not specified - returns **default** `80vh`)*
+* `abort` - returns the `client.karmaHTML.abort` [*\[see above\]*](#clientkarmahtml-abort) *(if not specified - returns **default** `0`)*
+* `timeout` - returns the `client.karmaHTML.timeout` [*\[see above\]*](#clientkarmahtml-timeout) *(if not specified - returns **default** `0`)*
 
 ### `length`
 **Syntax:** `karmaHTML.length` *(readonly)*  
@@ -361,8 +364,8 @@ Define `onstatechange` as a `function()`. This `function()` will be **automatica
 * the html resources are [loaded](#open) *(the `response` parameter is passed as **true**)*
 * the iframe html page is [reloaded](#reload)  *(the `response` parameter is passed as **true**)*
 * the iframe html page is [closed](#close) *(the `response` parameter is passed as **false**)*
-* the `abort` is [terminated](#clientkarmahtmlabort) *(the `response` parameter is passed as **false**)*
-* the `timeout` is [terminated](#clientkarmahtmltimeout) *(the `response` parameter is passed as **false**)*
+* the `abort` is [terminated](#clientkarmahtml-abort) *(the `response` parameter is passed as **false**)*
+* the `timeout` is [terminated](#clientkarmahtml-timeout) *(the `response` parameter is passed as **false**)*
 * any error occurs during html resources loading *(the `response` parameter is passed as **false**)*
 
 ```javascript
@@ -415,7 +418,7 @@ describe("The index.html iframe document",function(){
 
 ## Tag properties:
 > In all below contents **assume**, that your **karma** `config file` has got the `index.html` file of `index` **tag** specified.  
-> Also check out [how to define tag names](#clientkarmahtmlsource)
+> Also check out [how to define tag names](#clientkarmahtml-source)
 
 ### `_root`
 **Syntax:** `karmaHTML.index._root` *(readonly)*  
@@ -438,7 +441,7 @@ describe("The index.html iframe document",function(){
 * The value *(eg. `'600px'`)* is appended to the **iframe** element as the attribute `style="width:600px"`
 * All valid CSS values and units are allowed
 * Incorrect values will be ignored and the `width` will not be changed
-* Use `karmaHTML.index.width = null` to reset **this iframe** `width` CSS style to its **default value** *(to the value defined in the **karma** `config file` as `client.karmaHTML.width` [\[see above\]](#clientkarmahtmlwidth), or - if not defined - to the module default value `90%`)*
+* Use `karmaHTML.index.width = null` to reset **this iframe** `width` CSS style to its **default value** *(to the value defined in the **karma** `config file` as `client.karmaHTML.width` [\[see above\]](#clientkarmahtml-width), or - if not defined - to the module default value `90%`)*
 > Also check out `karmaHTML.width` [parameter](#width)  
 > Also check out `karmaHTML.index.open()` [dimensions parameter](#open)
 
@@ -477,7 +480,7 @@ Assuming, that the **karma** `config.file` `client.karmaHTML.source` array conta
 **Syntax:** `karmaHTML.index.src` *(readonly)*  
 **Return value type:** `String`  
 **Description:** Returns the `String` **url path** of the `.html` file of `index` **tag** defined in the **karma** `config file` *(regardless this iframe is appended to the DOM)*.
-> Also check out `client.karmaHTML.source` [property](#clientkarmahtmlsource)
+> Also check out `client.karmaHTML.source` [property](#clientkarmahtml-source)
 
 ### `hasIframe`
 **Syntax:** `karmaHTML.index.hasIframe` *(readonly)*  
@@ -509,8 +512,8 @@ Define `onstatechange` as a `function()`. This `function()` will be **automatica
 * the html resources are [loaded](#open) *(the `response` parameter is passed as **true**)*
 * the iframe html page is [reloaded](#reload)  *(the `response` parameter is passed as **true**)*
 * the iframe html page is [closed](#close) *(the `response` parameter is passed as **false**)*
-* the `abort` is [terminated](#clientkarmahtmlabort) *(the `response` parameter is passed as **false**)*
-* the `timeout` is [terminated](#clientkarmahtmltimeout) *(the `response` parameter is passed as **false**)*
+* the `abort` is [terminated](#clientkarmahtml-abort) *(the `response` parameter is passed as **false**)*
+* the `timeout` is [terminated](#clientkarmahtml-timeout) *(the `response` parameter is passed as **false**)*
 * any error occurs during html resources loading *(the `response` parameter is passed as **false**)*
 
 ```javascript
@@ -571,3 +574,110 @@ karmaHTML.tmpl.onstatechange = function(state){
 
 karmaHTML.index.open();
 ```
+
+# Step-by-step configuration
+We will use `Jasmine` framework for testing, `Mocha` reporter to report our tests results in the terminal, **`karmaHTML`** package to test our html files, `karma-jasmine-dom` package to test DOM objects with DOM custom matchers and `Chrome` browser to run our html templates for testing.
+1. Create new folder `New project` anywhere and create the following folders and files *(empty)* structure inside of it:
+```
+New project
+ ├ tests
+ │  └ tests.js
+ ├ karma.conf.js
+ └ index.html
+```
+2. Open the `New project` folder and open your terminal there *(with the location set to `New project` folder)*
+3. Install neccessary packages with npm by executing the following command:
+    * `npm install karma karma-jasmine jasmine-core karma-chrome-launcher karma-mocha-reporter karma-html karma-jasmine-dom`
+4. In the `karma.conf.js` file add the following content:
+```javascript
+module.exports = function(config) {
+  config.set({
+    files: [
+      {pattern: 'tests/*.js',watched:true,served:true,included:true}
+    ],
+    //load karma-mocha-reporter and karma-html
+    reporters: ['mocha','karmaHTML'],
+    //load karma-jasmine-dom and karma-jasmine
+    frameworks: ['jasmine-dom','jasmine'],
+    //load karma-chrome-launcher
+    browsers: ['Chrome'],
+    client: {
+      //If false, Karma will not remove iframes upon the completion of running the tests
+      clearContext:false,
+      //karma-html configuration
+      karmaHTML: {
+        source: [
+          //indicate 'index.html' file that will be loaded in the browser
+          //the 'index' tag will be used to get the access to the Document object of 'index.html'
+          {src:'./index.html', tag:'index'}
+        ],
+        auto: true
+      }
+    }
+  });
+};
+```
+5. It should work just fine right now, run `karma start` in the terminal and it should:
+    * prompt the positive tests results in the terminal
+    * open the Chrome browser and display the **iframe** with our *(empty)* `index.html` template
+6. Add the following HTML content example to our `index.html` file:
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <h3 id="header">Hello world!</h3>
+    <p id="paragraph">This is our html template.</p>
+  </body>
+</html>
+```
+7. Add the following jasmine test suits into our `tests/tests.js` file:
+```javascript
+//describe, beforeAll, it, expext - are the Jasmine default methods
+//karmaHTML is the karma-html package object with the access to all its features
+
+describe("The index.html iframe document",function(){
+  
+  beforeAll(function(done){
+    //load DOM custom matchers from karma-jasmine-dom package
+    jasmine.addMatchers(DOMCustomMatchers);
+    
+    //lets open our 'index.html' file in the browser by 'index' tag as you specified in 'karma.conf.js'
+    karmaHTML.index.open();
+    
+    //karmaHTML.index.onstatechange fires when the Document is loaded
+    //now the tests can be executed on the DOM
+    karmaHTML.index.onstatechange = function(ready){
+      //if the #Document is ready, fire tests
+      //the done() callback is the jasmine native async-support function
+      if(ready) done();
+    };
+  });
+  
+  it("should be a real Document object",function(){
+    var _document = karmaHTML.index.document;
+    expect(_document.constructor.name).toEqual('HTMLDocument');
+  });
+  
+  it("should contain paragraph and header that are the siblings",function(){
+    //karmaHTML.index.document gives the access to the Document object of 'index.html' file
+    var _document = karmaHTML.index.document;
+    //use all document javascript native methods on it
+    var header = _document.getElementById('header');
+    var paragraph = _document.getElementById('paragraph');
+    
+    //these are the karma-jasmine-dom custom matchers
+    expect(paragraph).toBeNextSiblingOf(header);
+    expect(header).toBePreviousSiblingOf(paragraph);
+  });
+});
+```
+
+6. Run `karma start` again in the terminal and it should:
+    * prompt the positive two tests results in the terminal
+    * open the Chrome browser and display the **iframe** with our `index.html` template loaded to run the tests on its DOM
+7. Read the documentation above to use all the features of `karma-html`!
