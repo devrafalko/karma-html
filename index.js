@@ -2,6 +2,7 @@
 
 var path = require('path');
 var glob = require('glob');
+var type = require('./lib/oftype.js');
 
 function jsPattern (path) {
   return {pattern: path, included: true, served: true, watched: false};
@@ -16,14 +17,14 @@ function cssPattern (path) {
 var loadHTML = function(files,client,basePath){
 	var c = client.karmaHTML, s = c.source;
 	var conditions = [
-		!type(c,'object'),
-		!type(s,'array'),
+		!type(c,Object),
+		!type(s,Array),
 		!s.length,
-		s.some(i => !type(i,'object')),
-		s.some(i => type(i.src,'undefined')),
-		s.some(i => type(i.tag,'undefined')),
-		s.some(i => (!type(i.src,'string') || !/.\.(html|htm)$/.test(i.src))),
-		s.some(i => !type(i.tag,'string')),
+		s.some(i => !type(i,Object)),
+		s.some(i => type(i.src,undefined)),
+		s.some(i => type(i.tag,undefined)),
+		s.some(i => (!type(i.src,String) || !/.\.(html|htm)$/.test(i.src))),
+		s.some(i => !type(i.tag,String)),
 		s.some(i => !i.tag.length),
 		s.some(i => !/[A-Za-z_$][A-Za-z0-9_$]*/.test(i.tag)),
 		hasDoubles(s.map(i => i.src)),
@@ -56,6 +57,7 @@ var loadHTML = function(files,client,basePath){
     }
     
 	files.unshift(jsPattern(path.join(__dirname, '/lib/appender.js')));
+	files.unshift(jsPattern(path.join(__dirname, '/lib/oftype.js')));
 	files.unshift(cssPattern(path.join(__dirname, '/lib/styles.css')));
 };
 
@@ -66,14 +68,6 @@ function pushError(condition,message){
 		return true;
 	}
 }
-
-function type(value,type){
-	type = type.toLowerCase();
-	if(typeof value==='undefined'&&type==='undefined') return true;
-	if(value===null&&type==='null') return true;
-	if(value===null||value===undefined) return false;
-	return value.constructor.toString().toLowerCase().search(type)>=0;
-}	
 
 function hasDoubles(a){
 	for(var x=0;x<a.length;x++){
@@ -91,4 +85,3 @@ loadHTML.$inject = ['config.files','config.client','config.basePath'];
 module.exports = {
   'reporter:karmaHTML': ['factory',loadHTML]
 };
-
