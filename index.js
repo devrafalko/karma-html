@@ -52,9 +52,15 @@ var loadHTML = function(files,client,basePath){
 		if(pushError(conditions[i],errorMsg[i])) return;
 	}
 	
-    for(var i=0;i<s.length;i++){
-      files.unshift(htmlPattern(path.join(basePath,s[i].src)));
-    }
+	for(var i=0;i<s.length;i++){
+		var src = s[i].src;
+		
+		if (!src.startsWith('/')) {
+			src = path.join(basePath, src);
+		}
+		
+		files.unshift(htmlPattern(src));
+	}
     
 	files.unshift(jsPattern(path.join(__dirname, '/lib/appender.js')));
 	files.unshift(jsPattern(path.join(__dirname, '/lib/oftype.js')));
